@@ -1,18 +1,18 @@
-from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
-from fastapi_users_db_sqlalchemy.access_token import SQLAlchemyBaseAccessTokenTable
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, JSON, Boolean
-from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy.orm import Mapped, declared_attr, mapped_column
-from datetime import datetime
+from typing import List
+from sqlalchemy.orm import Mapped
+from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTableUUID, SQLAlchemyBaseOAuthAccountTableUUID
+from fastapi_users_db_sqlalchemy.access_token import SQLAlchemyBaseAccessTokenTableUUID
+from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
+from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+Base: DeclarativeMeta = declarative_base()
 
 
-class User(SQLAlchemyBaseUserTable, Base):
-    __tablename__ = 'user'
+class OAuthAccount(SQLAlchemyBaseOAuthAccountTableUUID, Base):
+    pass
 
-    id = Column(Integer, primary_key=True)
+class AccessToken(SQLAlchemyBaseAccessTokenTableUUID, Base):
+    pass
 
-class AccessToken(SQLAlchemyBaseAccessTokenTable, Base):
-    __tablename__ = 'access_token'
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+class User(SQLAlchemyBaseUserTableUUID, Base):
+    oauth_accounts: Mapped[List[OAuthAccount]] = relationship("OAuthAccount", lazy="joined")

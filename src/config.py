@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 G_CLIENT_SECRET = os.environ.get("G_CLIENT_SECRET")
 G_CLIENT_ID = os.environ.get("G_CLIENT_ID")
+SECRET = os.environ.get("SECRET")
 
 DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')

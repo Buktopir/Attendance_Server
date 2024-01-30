@@ -1,15 +1,15 @@
+import uuid
 from typing import Optional
 
 from fastapi import Depends, Request
-from fastapi_users import BaseUserManager, IntegerIDMixin
-
+from fastapi_users import BaseUserManager, UUIDIDMixin
+from httpx_oauth.clients.google import GoogleOAuth2
 from src.auth.database import get_user_db
 from src.auth.models import User
+from src.config import SECRET, G_CLIENT_SECRET, G_CLIENT_ID
 
-SECRET = "SECRET"
-
-
-class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
+google_oauth_client = GoogleOAuth2(G_CLIENT_ID, G_CLIENT_SECRET)
+class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
 

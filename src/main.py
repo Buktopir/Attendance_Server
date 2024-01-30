@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Depends
-
 from src.auth.config import auth_backend
+from src.auth.manager import google_oauth_client
 from src.auth.models import User
 from src.auth.router import fastapi_users
-from src.auth.schemas import UserRead, UserCreate
+from src.auth.schemas import UserRead, UserCreate, UserUpdate
+from src.config import SECRET
 
 app = FastAPI()
 app.include_router(
@@ -17,6 +18,19 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
+
+app.include_router(
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"]
+)
+
+app.include_router(
+    fastapi_users.get_oauth_router(google_oauth_client, auth_backend, SECRET),
+    prefix="/auth/google",
+    tags=["auth"],
+)
+
 
 current_user = fastapi_users.current_user()
 

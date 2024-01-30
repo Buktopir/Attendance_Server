@@ -1,6 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
+from src.auth.models import Base
 from src.config import POSTGRES_URI
 
 engine = create_async_engine(POSTGRES_URI)
