@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi_users import FastAPIUsers
+from src.users import FastAPIUsers
 
 from src.auth.config import auth_backend
 from src.auth.manager import get_user_manager

@@ -2,7 +2,7 @@ import uuid
 from typing import Optional
 
 from fastapi import Depends, Request
-from fastapi_users import BaseUserManager, UUIDIDMixin
+from src.users import BaseUserManager, UUIDIDMixin
 from httpx_oauth.clients.google import GoogleOAuth2
 from src.auth.database import get_user_db
 from src.auth.models import User
